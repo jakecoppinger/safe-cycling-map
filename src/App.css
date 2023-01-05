@@ -1,0 +1,105 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mapClass {
+  border: 1px red;
+}
+
+#right {
+  width:70vw;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.mapboxgl-popup-content.mapboxgl-popup-content {
+  width: 400px;
+  max-width: 95vw;
+}
+
+.mapboxgl-popup-close-button {
+  font-size: 15px;
+}
+
+h1 {
+  position: fixed;
+  z-index: 10;
+  bottom: 0px;
+  left: 10px;
+  color: #19ff15bf;
+  font-size: calc(2vw + 2vh + 10px);
+  line-height: 0.8;
+}
+
+.copy-searches {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 10;
+
+  min-width: 400px;
+  
+  padding: 5px 10px;
+  
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 3px solid gray;
+  border-radius: 5px;
+}
+
+#search_container {
+  display: flex;
+}
+
+#search_container h3 {
+  margin: 0;
+  transform: translate(0, 18%);
+}
+
+#search_container input {
+  margin-left: 10px;
+  width: 310px;
+  height: 30px;
+  font-size: 20px;
+}
+.mapboxgl-ctrl-bottom-left {
+  right:0;
+  left: initial;
+  bottom: 15px;
+}

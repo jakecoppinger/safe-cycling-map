@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="A map of safe cycling infrastructure. Uses OpenStreetMap data."
+    />
+    <title>Safe Cycling Map</title>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+    <style>
+      #search_overlay {
+        border-radius: 3px;
+        border: none !important;
+        background-color: white !important;
+        opacity: 0.97;
+        padding: 10px !important;
+      }
+
+      #search_container {
+        display: flex;
+        margin-bottom: 8px;
+        gap: 10px;
+      }
+
+      #search_container input {
+        flex-grow: 1;
+        margin: 0 !important;
+      }
+
+      #search_suggestions {
+        display: flex;
+        margin-bottom: 10px;
+        gap: 5px;
+      }
+
+      #search_suggestions button {
+        flex-grow: 1;
+        padding: 6px 0;
+      }
+
+      #search_overlay button {
+        padding: 6px;
+        width: 100%;
+      }
+
+      #search_overlay p {
+        margin: 20px 0 10px 0 !important;
+      } 
+    </style>
+
+
+  </head>
+  <body>
+
+    <h1>Safe<br />Cycling<br />Map.</h1>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
