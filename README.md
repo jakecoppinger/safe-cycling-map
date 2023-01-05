@@ -3,6 +3,9 @@ Safe Cycling Map
 
 Work in progress!  PRs and forks very welcome :)
 
+
+![Screenshot of map](img/safe-cycling-map-2022-01-05.png)
+
 A map of bike infrastructure using [osm2streets](https://github.com/a-b-street/osm2streets) output.
 
 Uses [osm2streets-vector-tileserver](https://github.com/jakecoppinger/osm2streets-vector-tileserver),
