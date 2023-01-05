@@ -1,10 +1,10 @@
 Safe Cycling Map
 ================
 
-Work in progress!  PRs and forks very welcome :)
+Work in progress! PRs and forks very welcome :)
 
 
-![Screenshot of map](img/safe-cycling-map-2022-01-05.jpg)
+![Screenshot of map](img/safe-cycling-map-2022-01-05-v2.jpg)
 
 A map of bike infrastructure using [osm2streets](https://github.com/a-b-street/osm2streets) output.
 
