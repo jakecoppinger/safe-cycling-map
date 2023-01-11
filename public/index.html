@@ -9,7 +9,10 @@
       content="A map of safe cycling infrastructure. Uses OpenStreetMap data."
     />
     <title>Safe Cycling Map</title>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+    <link
+      href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css"
+      rel="stylesheet"
+    />
     <style>
       #search_overlay {
         border-radius: 3px;
@@ -48,13 +51,10 @@
 
       #search_overlay p {
         margin: 20px 0 10px 0 !important;
-      } 
+      }
     </style>
-
-
   </head>
   <body>
-
     <h1>Safe<br />Cycling<br />Map.</h1>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>

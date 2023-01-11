@@ -1,5 +1,8 @@
+// TODO: Find the layer of the road labels for the maptiler background
+const layerToAddAfter = undefined;
+
 function addLayer(
-  map: mapboxgl.Map,
+  map: maplibregl.Map,
   type:
     | "Driving"
     | "Parking"
@@ -12,7 +15,7 @@ function addLayer(
     | "LightRail"
     | "Footway"
     | "SharedUse",
-  paint: mapboxgl.FillPaint | undefined
+  paint: any // TODO: fix this. used to be maplibregl.FillPaint | undefined
 ): void {
   map.addLayer({
     id: type,
@@ -22,7 +25,7 @@ function addLayer(
     paint,
     filter: ["==", "type", type],
     // filter: ["==", "$type", "Polygon"],
-  }, 'road-label');
+  }, layerToAddAfter);
 }
 
 const colours = {
@@ -47,7 +50,7 @@ const colours = {
   SharedUse: "#E5E1BB",
 };
 
-export const mapOnLoad = (map: mapboxgl.Map) => () => {
+export const mapOnLoad = (map: maplibregl.Map) => () => {
   const layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style.
   let firstSymbolId;
@@ -156,7 +159,7 @@ export const mapOnLoad = (map: mapboxgl.Map) => () => {
     - control": "Signed" | "Signalled" | "Uncontrolled"
     */
     filter: ["==", "type", "intersection"],
-  }, 'road-label');
+  }, layerToAddAfter);
 
   // // Currently on the wrong side of ways??
   // addLayer(map, "Parking", {
@@ -175,7 +178,7 @@ export const mapOnLoad = (map: mapboxgl.Map) => () => {
     },
     filter: ["==", "type", "Biking"],
     // filter: ["==", "type", "Biking"],
-  }, 'road-label');
+  }, layerToAddAfter);
 
   map.addLayer({
     id: "intersectionMarkings",
@@ -188,7 +191,7 @@ export const mapOnLoad = (map: mapboxgl.Map) => () => {
       "fill-opacity": 0.8,
     },
     filter: ["==", "$type", "Polygon"],
-  }, 'road-label');
+  }, layerToAddAfter);
 
   map.addLayer({
     id: "laneMarkings",
@@ -201,5 +204,5 @@ export const mapOnLoad = (map: mapboxgl.Map) => () => {
       "fill-opacity": 1,
     },
     filter: ["==", "$type", "Polygon"],
-  }, 'road-label');
+  }, layerToAddAfter);
 };

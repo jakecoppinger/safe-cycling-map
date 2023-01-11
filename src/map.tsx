@@ -1,19 +1,12 @@
-import React, { useRef, useEffect, useState } from "react";
-// @ts-ignore
-// eslint-disable-next-line
-// import mapboxgl from "!mapbox-gl";
-import mapboxgl from "mapbox-gl";
+import React, { useEffect, useState } from "react";
+import maplibregl from 'maplibre-gl'; 
 import "./App.css";
 import { mapOnLoad } from "./layers";
 
-const MAPBOX_TOKEN =
-  "pk.eyJ1IjoiamFrZWMiLCJhIjoiY2tkaHplNGhjMDAyMDJybW4ybmRqbTBmMyJ9.AR_fnEuka8-cFb4Snp3upw";
-
-mapboxgl.accessToken = MAPBOX_TOKEN;
 
 export function Map() {
   const mapContainer = React.useRef<HTMLDivElement>(null);
-  const mapRef = React.useRef<mapboxgl.Map | null>(null);
+  const mapRef = React.useRef<maplibregl.Map | null>(null);
 
   const [lng, setLng] = useState(151.21084276742022);
   const [lat, setLat] = useState(-33.8720286260115);
@@ -28,21 +21,21 @@ export function Map() {
       return;
     }
 
-    mapRef.current = new mapboxgl.Map({
+    mapRef.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: "mapbox://styles/mapbox/streets-v12",
-      // style: "mapbox://styles/mapbox/dark-v10",
       center: [lng, lat],
       zoom: zoom,
+      style: "./style.json",
     });
 
     const map = mapRef.current;
     map.on("load", mapOnLoad(map));
 
-    map.addControl(new mapboxgl.NavigationControl());
-    map.addControl(new mapboxgl.FullscreenControl());
+    // TO FIX
+    // map.addControl(new maplibregl.NavigationControl());
+    // map.addControl(new maplibregl.FullscreenControl());
     map.addControl(
-      new mapboxgl.GeolocateControl({
+      new maplibregl.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true,
         },
