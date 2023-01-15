@@ -8,9 +8,9 @@ export function Map() {
   const mapContainer = React.useRef<HTMLDivElement>(null);
   const mapRef = React.useRef<maplibregl.Map | null>(null);
 
-  const [lng, setLng] = useState(151.21084276742022);
-  const [lat, setLat] = useState(-33.8720286260115);
-  const [zoom, setZoom] = useState(18);
+  const [lng, setLng] = useState(151.2160755932166);
+  const [lat, setLat] = useState(-33.88056647217827);
+  const [zoom, setZoom] = useState(17.504322191852786);
 
   useEffect(() => {
     // This is called on every pan
