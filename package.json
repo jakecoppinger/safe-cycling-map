@@ -64,7 +64,8 @@
   "scripts": {
     "start": "PORT=5000 node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "deploy": "npm run build && rsync -r --progress build/ ../deploy-safe-cycling-map/"
   },
   "eslintConfig": {
     "extends": "react-app"

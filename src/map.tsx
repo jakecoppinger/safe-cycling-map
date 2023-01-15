@@ -10,7 +10,7 @@ export function Map() {
 
   const [lng, setLng] = useState(151.21084276742022);
   const [lat, setLat] = useState(-33.8720286260115);
-  const [zoom, setZoom] = useState(17);
+  const [zoom, setZoom] = useState(18);
 
   useEffect(() => {
     // This is called on every pan
@@ -61,7 +61,7 @@ export function Map() {
     <div>
       <div className="sidebar">
         <label>
-          A work in progrss side project by{" "}
+          A work in progress side project by{" "}
           <a
             target="_blank"
             rel="noopener noreferrer"
