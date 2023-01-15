@@ -70,7 +70,9 @@ export const mapOnLoad = (map: maplibregl.Map) => () => {
   // Add a new vector tile source with ID 'mapillary'.
   map.addSource("osm2streets-vector-tileserver", {
     type: "vector",
-    tiles: ["http://localhost:3000/tile/{z}/{x}/{y}"],
+    tiles: ["https://api.safecyclingmap.com/tile/{z}/{x}/{y}"],
+    // tiles: ["http://localhost:3000/tile/{z}/{x}/{y}"],
+    
     minzoom: 15,
     maxzoom: 20,
   });
