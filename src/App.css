@@ -42,7 +42,7 @@
 }
 
 #right {
-  width:70vw;
+  width: 70vw;
   overflow: hidden;
   position: absolute;
   top: 0;
@@ -75,9 +75,9 @@ h1 {
   z-index: 10;
 
   min-width: 400px;
-  
+
   padding: 5px 10px;
-  
+
   background-color: rgba(255, 255, 255, 0.8);
   border: 3px solid gray;
   border-radius: 5px;
@@ -99,7 +99,10 @@ h1 {
   font-size: 20px;
 }
 .mapboxgl-ctrl-bottom-left {
-  right:0;
+  right: 0;
   left: initial;
   bottom: 15px;
+}
+.mapboxgl-ctrl-top-left {
+  margin-top: 50px;
 }

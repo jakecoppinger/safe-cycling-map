@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "./App.css";
 import { mapOnLoad } from "./layers";
+
 // @ts-ignore
-// import MapboxDirections from "@mapbox/mapbox-gl-directions"
+import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoiamFrZWMiLCJhIjoiY2tkaHplNGhjMDAyMDJybW4ybmRqbTBmMyJ9.AR_fnEuka8-cFb4Snp3upw";
@@ -61,12 +63,12 @@ export function Map() {
 
     map.addControl(new mapboxgl.NavigationControl());
     map.addControl(new mapboxgl.FullscreenControl());
-    // map.addControl(
-    //   new MapboxDirections({
-    //   accessToken: mapboxgl.accessToken
-    //   }),
-    //   'top-left'
-    //   );
+    map.addControl(
+      new MapboxDirections({
+        accessToken: mapboxgl.accessToken,
+      }),
+      "top-left"
+    );
     map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
