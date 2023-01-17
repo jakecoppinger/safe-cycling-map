@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import maplibregl from 'maplibre-gl'; 
+import maplibregl from "maplibre-gl";
 import "./App.css";
 import { mapOnLoad } from "./layers";
-
 
 export function Map() {
   const mapContainer = React.useRef<HTMLDivElement>(null);
@@ -25,7 +24,29 @@ export function Map() {
       container: mapContainer.current,
       center: [lng, lat],
       zoom: zoom,
-      style: "./style.json",
+      style: {
+        version: 8,
+        sources: {
+          "raster-tiles": {
+            type: "raster",
+            tiles: [
+              "https://a.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
+            ],
+            tileSize: 256,
+            attribution:
+              '© <a target="_blank" href="https://www.cyclosm.org">CyclOSM</a>, <a target="_blank" href="https://github.com/a-b-street/osm2streets">osm2streets</a>, <a target="_blank" href="https://openstreetmap.org/">OpenStreetMap contributors</a>',
+          },
+        },
+        layers: [
+          {
+            id: "simple-tiles",
+            type: "raster",
+            source: "raster-tiles",
+            minzoom: 0,
+            maxzoom: 22,
+          },
+        ],
+      },
     });
 
     const map = mapRef.current;
