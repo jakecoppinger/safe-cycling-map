@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/core": "7.9.0",
     "@mapbox/mapbox-gl-directions": "^4.1.1",
+    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
     "@svgr/webpack": "4.3.3",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
@@ -78,6 +79,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@types/jest": "^24.0.0",
+    "@types/mapbox__mapbox-gl-geocoder": "^4.7.3",
     "@types/mapbox-gl": "^2.7.10",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",

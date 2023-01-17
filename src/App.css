@@ -106,3 +106,8 @@ h1 {
 .mapboxgl-ctrl-top-left {
   margin-top: 50px;
 }
+
+.mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-search {
+  /* FIXME: It's not correctly indented */
+  display: none;
+}
