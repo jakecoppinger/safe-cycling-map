@@ -2,7 +2,7 @@
 const layerToAddAfter = undefined;
 
 function addLayer(
-  map: maplibregl.Map,
+  map: mapboxgl.Map,
   type:
     | "Driving"
     | "Parking"
@@ -15,7 +15,7 @@ function addLayer(
     | "LightRail"
     | "Footway"
     | "SharedUse",
-  paint: any // TODO: fix this. used to be maplibregl.FillPaint | undefined
+  paint: any // TODO: fix this. used to be mapboxgl.FillPaint | undefined
 ): void {
   map.addLayer({
     id: type,
@@ -50,7 +50,7 @@ const colours = {
   SharedUse: "#E5E1BB",
 };
 
-export const mapOnLoad = (map: maplibregl.Map) => () => {
+export const mapOnLoad = (map: mapboxgl.Map) => () => {
   const layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style.
   let firstSymbolId;

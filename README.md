@@ -19,7 +19,7 @@ See instructions for setting up the backend tileserve at
 
 Install packages:
 `nvm install`
-`npm i`
+`npm i --legacy-peer-deps`
 
 Run dev server:
 `npm run start`

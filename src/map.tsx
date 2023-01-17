@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import maplibregl from "maplibre-gl";
+import mapboxgl from "mapbox-gl";
 import "./App.css";
 import { mapOnLoad } from "./layers";
+// @ts-ignore
+// import MapboxDirections from "@mapbox/mapbox-gl-directions"
 
+const MAPBOX_TOKEN =
+  "pk.eyJ1IjoiamFrZWMiLCJhIjoiY2tkaHplNGhjMDAyMDJybW4ybmRqbTBmMyJ9.AR_fnEuka8-cFb4Snp3upw";
+
+mapboxgl.accessToken = MAPBOX_TOKEN;
 export function Map() {
   const mapContainer = React.useRef<HTMLDivElement>(null);
-  const mapRef = React.useRef<maplibregl.Map | null>(null);
+  const mapRef = React.useRef<mapboxgl.Map | null>(null);
 
   const [lng, setLng] = useState(151.2160755932166);
   const [lat, setLat] = useState(-33.88056647217827);
@@ -20,10 +26,11 @@ export function Map() {
       return;
     }
 
-    mapRef.current = new maplibregl.Map({
+    mapRef.current = new mapboxgl.Map({
       container: mapContainer.current,
       center: [lng, lat],
       zoom: zoom,
+      hash: true,
       style: {
         version: 8,
         sources: {
@@ -52,11 +59,16 @@ export function Map() {
     const map = mapRef.current;
     map.on("load", mapOnLoad(map));
 
-    // TO FIX
-    // map.addControl(new maplibregl.NavigationControl());
-    // map.addControl(new maplibregl.FullscreenControl());
+    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.FullscreenControl());
+    // map.addControl(
+    //   new MapboxDirections({
+    //   accessToken: mapboxgl.accessToken
+    //   }),
+    //   'top-left'
+    //   );
     map.addControl(
-      new maplibregl.GeolocateControl({
+      new mapboxgl.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true,
         },

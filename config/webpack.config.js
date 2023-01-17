@@ -390,7 +390,7 @@ module.exports = function (webpackEnv) {
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
                 compact: isEnvProduction,
-                ignore: ['./node_modules/maplibre-gl/dist/maplibre-gl.js']
+                ignore: ['./node_modules/mapbox-gl/dist/mapbox-gl.js']
               },
             },
             // Process any JS outside of the app with Babel.
@@ -418,7 +418,7 @@ module.exports = function (webpackEnv) {
                 // show incorrect code and set breakpoints on the wrong lines.
                 sourceMaps: shouldUseSourceMap,
                 inputSourceMap: shouldUseSourceMap,
-                ignore: ['./node_modules/maplibre-gl/dist/maplibre-gl.js']
+                ignore: ['./node_modules/mapbox-gl/dist/mapbox-gl.js']
               },
             },
             // "postcss" loader applies autoprefixer to our CSS.
