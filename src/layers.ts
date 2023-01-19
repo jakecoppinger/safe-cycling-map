@@ -73,7 +73,7 @@ export const mapOnLoad = (map: mapboxgl.Map) => () => {
     tiles: ["https://api.safecyclingmap.com/tile/{z}/{x}/{y}"],
     // tiles: ["http://localhost:3000/tile/{z}/{x}/{y}"],
     
-    minzoom: 16,
+    minzoom: 17,
     maxzoom: 19,
   });
 
