@@ -4,6 +4,7 @@ import { OverpassResponse, RawOverpassNode } from "./interfaces";
 import * as http from "https";
 import { drawMarkersAndCards, removeMarkers } from "./drawing";
 import { wayToNode } from "./geo-utils";
+import { bicycleParking } from "./overpass-requests";
 // southern-most latitude, western-most longitude, northern-most latitude, eastern-most longitude.
 export async function getOSMData(bounds: number[]): Promise<OverpassResponse> {
   const options = {
@@ -17,22 +18,8 @@ export async function getOSMData(bounds: number[]): Promise<OverpassResponse> {
   };
   console.log("Started POST request...");
   const boundsStr = bounds.join(",");
-  const request_str = `
-    [out:json][timeout:25];
-    (
-      // query part for: “bicycle_parking=*”
-      node["bicycle_parking"](${boundsStr});
-      way["bicycle_parking"](${boundsStr});
-      relation["bicycle_parking"](${boundsStr});
-      // query part for: “amenity=bicycle_parking”
-      node["amenity"="bicycle_parking"](${boundsStr});
-      way["amenity"="bicycle_parking"](${boundsStr});
-      relation["amenity"="bicycle_parking"](${boundsStr});
-    );
-    out body;
-    >;
-    out skel qt;
-    `;
+  const request_str = bicycleParking(boundsStr);;
+  
   console.log("request:", request_str);
 
   return new Promise((resolve, reject) => {
