@@ -5,8 +5,13 @@ import * as http from "https";
 import { drawMarkersAndCards, removeMarkers } from "./drawing";
 import { wayToNode } from "./geo-utils";
 import { bicycleParking } from "./overpass-requests";
-// southern-most latitude, western-most longitude, northern-most latitude, eastern-most longitude.
-export async function getOSMData(bounds: number[]): Promise<OverpassResponse> {
+
+/**
+ * Make request to Overpass Turbo.
+ * @param overpassQuery Overpass turbo query string
+ * @returns 
+ */
+export async function getOSMData(overpassQuery: string): Promise<OverpassResponse> {
   const options = {
     hostname: "overpass-api.de",
     port: 443,
@@ -16,11 +21,6 @@ export async function getOSMData(bounds: number[]): Promise<OverpassResponse> {
       "Content-Type": "application/json",
     },
   };
-  console.log("Started POST request...");
-  const boundsStr = bounds.join(",");
-  const request_str = bicycleParking(boundsStr);;
-  
-  console.log("request:", request_str);
 
   return new Promise((resolve, reject) => {
     var req = http.request(options, function (res) {
@@ -41,7 +41,7 @@ export async function getOSMData(bounds: number[]): Promise<OverpassResponse> {
     req.on("error", function (e) {
       reject(e.message);
     });
-    req.write(request_str);
+    req.write(overpassQuery);
     req.end();
   });
 }
@@ -59,12 +59,16 @@ async function fetchAndDrawMarkers(
   const westLong = bounds.getWest();
   const northLat = bounds.getNorth();
   const eastLong = bounds.getEast();
-  const overpassBounds = [southernLat, westLong, northLat, eastLong];
-  console.log("getting ads");
 
   let ads: OverpassResponse;
+
+  const overpassBounds = [southernLat, westLong, northLat, eastLong];
+  const boundsStr = overpassBounds.join(",");
+  const overpassQuery = bicycleParking(boundsStr);;
+
+  console.log("Started POST request...");
   try {
-    ads = await getOSMData(overpassBounds);
+    ads = await getOSMData(overpassQuery);
   } catch (e) {
     console.log("Error:", e);
     setLoadingStatus("unknownerror");
