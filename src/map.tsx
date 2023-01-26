@@ -9,6 +9,8 @@ import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import { debouncedFetchAndDrawMarkers } from "./api";
+import { LoadingStatusType } from "./interfaces";
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoiamFrZWMiLCJhIjoiY2tkaHplNGhjMDAyMDJybW4ybmRqbTBmMyJ9.AR_fnEuka8-cFb4Snp3upw";
@@ -17,6 +19,9 @@ mapboxgl.accessToken = MAPBOX_TOKEN;
 export function Map() {
   const mapContainer = React.useRef<HTMLDivElement>(null);
   const mapRef = React.useRef<mapboxgl.Map | null>(null);
+  const markers = React.useRef<mapboxgl.Marker[]>([]);
+  const [loadingStatus, setLoadingStatus] =
+    useState<LoadingStatusType>("success");
 
   const [lng, setLng] = useState(151.2160755932166);
   const [lat, setLat] = useState(-33.88056647217827);
@@ -100,12 +105,33 @@ export function Map() {
       setLat(map.getCenter().lat);
       setZoom(map.getZoom());
     });
-  });
+    debouncedFetchAndDrawMarkers(map, markers, setLoadingStatus);
 
+
+    map.on("moveend", async () => {
+      if (map === null) {
+        return;
+      }
+      debouncedFetchAndDrawMarkers(map, markers, setLoadingStatus);
+    });
+
+
+  });
+  const statusMessages = {
+    loading: "Loading from OpenStreetMap...",
+    success: "Done loading",
+    unknownerror: "Error loading data. Please wait a bit",
+    "429error": "Too many requests, please try in a bit",
+  };
+
+
+  const statusText = statusMessages[loadingStatus];
   return (
     <div>
       <div className="sidebar">
         <label>
+        {" "}
+          {statusText} |{" "}
           A work in progress side project by{" "}
           <a
             target="_blank"
