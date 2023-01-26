@@ -207,4 +207,9 @@ export const mapOnLoad = (map: mapboxgl.Map) => () => {
     },
     filter: ["==", "$type", "Polygon"],
   }, layerToAddAfter);
+
+  ///////////////
+
+
+
 };

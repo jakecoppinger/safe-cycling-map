@@ -4,7 +4,9 @@ import { OverpassResponse, RawOverpassNode } from "./interfaces";
 import * as http from "https";
 import { drawMarkersAndCards, removeMarkers } from "./drawing";
 import { wayToNode } from "./geo-utils";
-import { bicycleParking } from "./overpass-requests";
+import { bicycleParking, safeCycleways } from "./overpass-requests";
+
+import osmtogeojson from 'osmtogeojson';
 
 /**
  * Make request to Overpass Turbo.
@@ -18,7 +20,8 @@ export async function getOSMData(overpassQuery: string): Promise<OverpassRespons
     path: "/api/interpreter",
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
+      'Content-Type': 'application/x-www-form-urlencoded'
     },
   };
 
@@ -34,14 +37,15 @@ export async function getOSMData(overpassQuery: string): Promise<OverpassRespons
         }
 
         const jsonResponse = JSON.parse(body);
-        const bars = jsonResponse.elements;
-        resolve(bars);
+        resolve(jsonResponse);
       });
     });
     req.on("error", function (e) {
       reject(e.message);
     });
-    req.write(overpassQuery);
+    req.write(new URLSearchParams({
+      'data': overpassQuery,
+    }).toString());
     req.end();
   });
 }
@@ -61,24 +65,86 @@ async function fetchAndDrawMarkers(
   const eastLong = bounds.getEast();
 
   let ads: OverpassResponse;
+  let safeRoutes: OverpassResponse;
 
   const overpassBounds = [southernLat, westLong, northLat, eastLong];
   const boundsStr = overpassBounds.join(",");
-  const overpassQuery = bicycleParking(boundsStr);;
+  const parkingOverpassQuery = bicycleParking(boundsStr);;
+  const safeRoutesOverpassQuery = safeCycleways(boundsStr);;
 
   console.log("Started POST request...");
   try {
-    ads = await getOSMData(overpassQuery);
+    ads = (await getOSMData(parkingOverpassQuery));
+    safeRoutes = await getOSMData(safeRoutesOverpassQuery);
   } catch (e) {
     console.log("Error:", e);
     setLoadingStatus("unknownerror");
     return;
   }
 
+  const geoJson = osmtogeojson(safeRoutes, {})
+  console.log(geoJson);
+  console.log("Adding geojson to map...");
+
+  // try {
+  //   map.removeSource('greenRoads');
+  // } catch (e) {
+
+  // }
+
+  map.addSource('redRoads', {
+    type: 'geojson',
+    data: {
+      features: geoJson.features.filter(feature => feature.properties &&
+        feature.properties.maxspeed > 40),
+      type: "FeatureCollection"
+    }
+  });
+
+
+
+  map.addSource('greenRoads', {
+    type: 'geojson',
+    data: {
+      features: geoJson.features.filter(feature => feature.properties &&
+        (feature.properties.highway === 'cycleway' || feature.properties.highway === 'pedestrian'))
+      ,
+      type: "FeatureCollection"
+    }
+  });
+
+
+
+  // Add a new layer to visualize the polygon.
+  map.addLayer({
+    'id': 'redRoadsId',
+    'type': 'line',
+    'source': 'redRoads', // reference the data source
+    'layout': {},
+    'paint': {
+      "line-color": "red",
+      "line-width": 5
+    },
+  });
+
+
+  // Add a new layer to visualize the polygon.
+  map.addLayer({
+    'id': 'greenRoadsId',
+    'type': 'line',
+    'source': 'greenRoads', // reference the data source
+    'layout': {},
+    'paint': {
+      "line-color": "green",
+      "line-width": 5
+    },
+  });
+
+  return;
   removeMarkers(markers.current);
 
-  const nodesAndWayCenters: RawOverpassNode[] = ads
-    .map((item) => (item.type === "way" ? wayToNode(item, ads) : item))
+  const nodesAndWayCenters: RawOverpassNode[] = ads.elements
+    .map((item) => (item.type === "way" ? wayToNode(item, ads.elements) : item))
     .filter((item) => item !== null)
     .map((item) => item as RawOverpassNode)
     .filter((item) => item.tags !== undefined);

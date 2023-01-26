@@ -4,14 +4,14 @@ interface BicycleParkingInterface {
   covered?: "yes" | "no";
   lit?: "yes" | "no";
   bicycle_parking?:
-    | "stands"
-    | "wall_loops"
-    | "rack"
-    | "safe_loops"
-    | "shed"
-    | "bollard"
-    | "lockers"
-    | "building";
+  | "stands"
+  | "wall_loops"
+  | "rack"
+  | "safe_loops"
+  | "shed"
+  | "bollard"
+  | "lockers"
+  | "building";
 }
 
 export interface RawOverpassNode {
@@ -28,7 +28,9 @@ export interface RawOverpassWay {
   tags?: BicycleParkingInterface;
 }
 
-export type OverpassResponse  = (RawOverpassNode | RawOverpassWay)[];
+export type OverpassResponse = {
+  elements: (RawOverpassNode | RawOverpassWay)[]
+};
 
 
 export type LoadingStatusType = "loading" | "success" | "429error" | "unknownerror";
