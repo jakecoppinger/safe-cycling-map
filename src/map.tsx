@@ -60,7 +60,7 @@ export function Map() {
             type: "raster",
             source: "raster-tiles",
             minzoom: 0,
-            maxzoom: 22,
+            maxzoom: 19,
           },
         ],
       },
