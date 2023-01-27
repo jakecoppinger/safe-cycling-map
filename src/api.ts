@@ -86,11 +86,25 @@ async function fetchAndDrawMarkers(
   console.log(geoJson);
   console.log("Adding geojson to map...");
 
-  // try {
-  //   map.removeSource('greenRoads');
-  // } catch (e) {
+  try {
+    if(map.isSourceLoaded('greenRoads')) {
+      console.log("Removing sources...");
+      map.removeLayer('greenRoadsId');
+      map.removeLayer('redRoadsId');
+      map.removeLayer('orangeRoadsId');
 
-  // }
+      map.removeSource('greenRoads');
+      map.removeSource('redRoads');
+      map.removeSource('orangeRoads');
+
+    } else {
+
+      console.log("NOT Removing sources.");
+    }
+
+  } catch (e) {
+
+  }
 
   map.addSource('redRoads', {
     type: 'geojson',
@@ -101,13 +115,20 @@ async function fetchAndDrawMarkers(
     }
   });
 
-
-
   map.addSource('greenRoads', {
     type: 'geojson',
     data: {
       features: geoJson.features.filter(feature => feature.properties &&
         (feature.properties.highway === 'cycleway' || feature.properties.highway === 'pedestrian'))
+      ,
+      type: "FeatureCollection"
+    }
+  });
+  map.addSource('orangeRoads', {
+    type: 'geojson',
+    data: {
+      features: geoJson.features.filter(feature => feature.properties &&
+        (feature.properties.maxspeed <= 40))
       ,
       type: "FeatureCollection"
     }
@@ -136,6 +157,16 @@ async function fetchAndDrawMarkers(
     'layout': {},
     'paint': {
       "line-color": "green",
+      "line-width": 5
+    },
+  });
+  map.addLayer({
+    'id': 'orangeRoadsId',
+    'type': 'line',
+    'source': 'orangeRoads', // reference the data source
+    'layout': {},
+    'paint': {
+      "line-color": "orange",
       "line-width": 5
     },
   });
