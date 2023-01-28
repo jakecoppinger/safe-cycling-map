@@ -4,6 +4,7 @@ import {
 } from "./interfaces";
 
 import { FeatureCollection, Geometry, GeoJsonProperties, Feature, GeometryObject } from 'geojson';
+import { isGreenRoad, isOrangeRoad, isRedRoad } from "./osm-selectors";
 
 export function drawMarkerAndCard(
   item: RawOverpassNode,
@@ -80,16 +81,14 @@ export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Ge
   map.addSource('redRoads', {
     type: 'geojson',
     data: {
-      features: geoJson.features.filter(feature => feature.properties &&
-        (feature.properties.maxspeed > 40 || (feature.properties.highway === 'residential' && feature.properties.maxspeed === undefined))),
+      features: geoJson.features.filter(isRedRoad),
       type: "FeatureCollection"
     }
   });
   map.addSource('orangeRoads', {
     type: 'geojson',
     data: {
-      features: geoJson.features.filter(feature => feature.properties &&
-        (feature.properties.maxspeed <= 40 || feature.properties.cycleway === 'lane'))
+      features: geoJson.features.filter(isOrangeRoad)
       ,
       type: "FeatureCollection"
     }
@@ -98,11 +97,7 @@ export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Ge
   map.addSource('greenRoads', {
     type: 'geojson',
     data: {
-      features: geoJson.features.filter(feature => feature.properties &&
-        (feature.properties.maxspeed <= 30 || feature.properties.highway === 'cycleway' || feature.properties.highway === 'pedestrian'
-
-          || feature.properties.highway === 'living_street'
-        ))
+      features: geoJson.features.filter(isGreenRoad)
       ,
       type: "FeatureCollection"
     }
