@@ -106,7 +106,7 @@ export function Map() {
       }
       const zoom = map.getZoom();
       if (zoom > min_overpass_turbo_zoom) {
-      console.log(`zoom is ${zoom}`);
+        console.log(`zoom is ${zoom}`);
         debouncedFetchAndDrawMarkers(map, markers, setLoadingStatus);
       }
     });
@@ -125,32 +125,26 @@ export function Map() {
     <div>
       <div className="sidebar">
         <label>
-          {" "}
-          {statusText}
+          <span color="red">Warning:</span> Data is open source and not guaranteed to be
+          accurate.
           <br></br>
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://github.com/jakecoppinger/safe-cycling-map/blob/main/about.md"
+            href="https://github.com/jakecoppinger/safe-cycling-map/blob/main/key.md"
           >
             View map key and how safety is calculated
           </a>
-          <br></br>A work in progress side project by{" "}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://jakecoppinger.com/"
-          >
-            Jake Coppinger
-          </a>
-          <br></br>Open source on{" "}
+          <br></br>
           <a
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/jakecoppinger/safe-cycling-map"
           >
-            Github
+            About this map
           </a>
+          <br></br>
+          {statusText}
         </label>
       </div>
       <div ref={mapContainer} className="map-container" />
