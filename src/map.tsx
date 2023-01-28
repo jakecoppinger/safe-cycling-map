@@ -112,10 +112,10 @@ export function Map() {
     });
   });
   const statusMessages = {
-    loading: "Loading from OpenStreetMap...",
-    success: "Done loading",
-    ready_to_load: "About to load...",
-    too_zoomed_out: "Zoom in to see street safety",
+    loading: "Loading safety ratings...",
+    success: "Done loading safety ratings",
+    ready_to_load: "About to load ratings...",
+    too_zoomed_out: "Zoom in to see street safety ratings",
     unknownerror: "Error loading. Please wait a bit",
     "429error": "Too many requests, please try in a bit",
   };

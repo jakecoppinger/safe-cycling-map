@@ -10,7 +10,7 @@ When zoomed in close, individual road and bicycle lanes are shown. When zoomed o
 coloured by their safety ratings.
 
 # Disclaimer
-Warning: This is an arbitrary rating system. Data is not guaranteed to be accurate.
+Warning: This is an arbitrary rating system. Data is open source and not guaranteed to be accurate.
 
 This map uses OpenStreetMap data. It is not a complete or accurate map of the world and should not
 be used in such a manner that deficiencies, omissions, inaccuracies or errors could result in death,

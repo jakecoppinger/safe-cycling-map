@@ -2,7 +2,7 @@ Safe Cycling Map
 ================
 Zoom in to see individual lanes, zoom out a little to see street safety.
 
-Warning: This is an arbitrary rating system. Data is not guaranteed to be accurate.
+Warning: This is an arbitrary rating system. Data is open source and not guaranteed to be accurate.
 
 This map uses OpenStreetMap data. It is not a complete or accurate map of the world and should not
 be used in such a manner that deficiencies, omissions, inaccuracies or errors could result in death,
@@ -14,19 +14,29 @@ propose improvments to the safety rating system).
 
 # Key
 ## Safe streets - green
-- Speed is less than or equal to 30kph
-- Is a [living street](https://wiki.openstreetmap.org/wiki/Tag:highway%3Dliving_street)
-- Is a separated cycleway
-- Is a cycle lane separated from the road
-- Is a shared path (bikes + pedestrians allowed)
+The street satisfies any of the below conditions:
+- The speed is less than or equal to 30kph
+- It's a [living street](https://wiki.openstreetmap.org/wiki/Tag:highway%3Dliving_street)
+- Is has a separated cycleway
+- It has a cycle lane separated from the road
+- Is has a shared path (bikes + pedestrians allowed)
 
 ## More dangerous streets
-- Road has a speed limit less than 40kph and greater than 30kmh
-- Has an on road, painted (non-separated) bike lane
+The street satisfies any of the below conditions:
+- It has a speed limit less than 40kph and greater than 30kmh
+- It has an on road, painted (non-separated) bike lane
 
 ## Dangerous streets
-- Speed is higher than 40kmh
-- Road is a residental street with default speed limit (50kph)
+The street satisfies any of the below conditions:
+- It has a speed higher than 40kmh
+- It is a residental street with the default speed limit (assumed to be 50kph)
 
 ## TODO: Banned streets
 Currently banned streets (eg. motorways/Sydney Harbour Bridge) are currently displayed as red.
+
+# Technical details
+
+These safety ratings are calculated in
+https://github.com/jakecoppinger/safe-cycling-map/blob/main/src/osm-selectors.ts
+
+PRs are very welcome!
