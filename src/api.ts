@@ -90,6 +90,7 @@ async function fetchAndDrawMarkers(
   addStreetLayers(map, geoJson);
   
 
+  setLoadingStatus("success");
   return;
   // removeMarkers(markers.current);
 
@@ -100,7 +101,6 @@ async function fetchAndDrawMarkers(
   //   .filter((item) => item.tags !== undefined);
 
   // markers.current = await drawMarkersAndCards(map, nodesAndWayCenters);
-  // setLoadingStatus("success");
 }
 
 type LoadingStatusType = "loading" | "success" | "429error" | "unknownerror";

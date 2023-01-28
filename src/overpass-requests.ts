@@ -24,13 +24,14 @@ export const safeCycleways = (boundsStr: string) => `
 
 ( 
   way[highway]["highway"!~"cycleway|path|footway|pedestrian"]["bicycle"!~"no"][maxspeed](if:t["maxspeed"]<=50);
+  way["highway"="residential"];
   
   way[highway=cycleway];
   way["highway"~"cycleway|path|footway|pedestrian"]["bicycle"~"yes|designated"];
   way[highway=proposed][proposed=cycleway];
   way[highway=construction][construction=cycleway];
   way[proposed=cycleway];
-  
+  way[cycleway=lane];
 
 );
 

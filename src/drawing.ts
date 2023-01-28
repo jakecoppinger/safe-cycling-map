@@ -56,7 +56,7 @@ export function removeMarkers(markers: mapboxgl.Marker[]): void {
 }
 export function removeStreetLayers(map: mapboxgl.Map): void {
   try {
-    if(map.isSourceLoaded('greenRoads')) {
+    if (map.isSourceLoaded('greenRoads')) {
       console.log("Removing sources...");
       map.removeLayer('greenRoadsId');
       map.removeLayer('redRoadsId');
@@ -77,11 +77,20 @@ export function removeStreetLayers(map: mapboxgl.Map): void {
 }
 
 export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Geometry, GeoJsonProperties>) {
-map.addSource('redRoads', {
+  map.addSource('redRoads', {
     type: 'geojson',
     data: {
       features: geoJson.features.filter(feature => feature.properties &&
-        feature.properties.maxspeed > 40),
+        (feature.properties.maxspeed > 40 || (feature.properties.highway === 'residential' && feature.properties.maxspeed === undefined))),
+      type: "FeatureCollection"
+    }
+  });
+  map.addSource('orangeRoads', {
+    type: 'geojson',
+    data: {
+      features: geoJson.features.filter(feature => feature.properties &&
+        (feature.properties.maxspeed <= 40 || feature.properties.cycleway === 'lane'))
+      ,
       type: "FeatureCollection"
     }
   });
@@ -90,16 +99,10 @@ map.addSource('redRoads', {
     type: 'geojson',
     data: {
       features: geoJson.features.filter(feature => feature.properties &&
-        (feature.properties.highway === 'cycleway' || feature.properties.highway === 'pedestrian'))
-      ,
-      type: "FeatureCollection"
-    }
-  });
-  map.addSource('orangeRoads', {
-    type: 'geojson',
-    data: {
-      features: geoJson.features.filter(feature => feature.properties &&
-        (feature.properties.maxspeed <= 40))
+        (feature.properties.maxspeed <= 30 || feature.properties.highway === 'cycleway' || feature.properties.highway === 'pedestrian'
+
+          || feature.properties.highway === 'living_street'
+        ))
       ,
       type: "FeatureCollection"
     }
@@ -119,6 +122,18 @@ map.addSource('redRoads', {
     },
   });
 
+  map.addLayer({
+    'id': 'orangeRoadsId',
+    'type': 'line',
+    'source': 'orangeRoads', // reference the data source
+    'layout': {},
+    'paint': {
+      "line-color": "orange",
+      "line-width": 3
+    },
+  });
+
+
 
   // Add a new layer to visualize the polygon.
   map.addLayer({
@@ -131,18 +146,6 @@ map.addSource('redRoads', {
       "line-width": 7
     },
   });
-  map.addLayer({
-    'id': 'orangeRoadsId',
-    'type': 'line',
-    'source': 'orangeRoads', // reference the data source
-    'layout': {},
-    'paint': {
-      "line-color": "orange",
-      "line-width": 5
-    },
-  });
-
-
 
 }
 

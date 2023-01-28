@@ -41,29 +41,7 @@ export function Map() {
       center: [lng, lat],
       zoom: zoom,
       hash: true,
-      style: {
-        version: 8,
-        sources: {
-          "raster-tiles": {
-            type: "raster",
-            tiles: [
-              "https://a.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
-            ],
-            tileSize: 256,
-            attribution:
-              '© <a target="_blank" href="https://www.cyclosm.org">CyclOSM</a>, <a target="_blank" href="https://github.com/a-b-street/osm2streets">osm2streets</a>, <a target="_blank" href="https://openstreetmap.org/">OpenStreetMap contributors</a>',
-          },
-        },
-        layers: [
-          {
-            id: "simple-tiles",
-            type: "raster",
-            source: "raster-tiles",
-            minzoom: 0,
-            maxzoom: 19,
-          },
-        ],
-      },
+      style: 'mapbox://styles/mapbox/dark-v11', 
     });
 
     const map = mapRef.current;
