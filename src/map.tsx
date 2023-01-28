@@ -93,9 +93,10 @@ export function Map() {
       setZoom(map.getZoom());
     });
 
-    if (zoom < min_overpass_turbo_zoom) {
+    if (map.getZoom() < min_overpass_turbo_zoom) {
       setLoadingStatus("too_zoomed_out");
     } else {
+      console.log(`zoom is ${map.getZoom()}`);
       debouncedFetchAndDrawMarkers(map, markers, setLoadingStatus);
     }
 
@@ -105,6 +106,7 @@ export function Map() {
       }
       const zoom = map.getZoom();
       if (zoom > min_overpass_turbo_zoom) {
+      console.log(`zoom is ${zoom}`);
         debouncedFetchAndDrawMarkers(map, markers, setLoadingStatus);
       }
     });

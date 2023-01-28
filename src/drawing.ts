@@ -57,7 +57,6 @@ export function removeMarkers(markers: mapboxgl.Marker[]): void {
 }
 export function removeStreetLayers(map: mapboxgl.Map): void {
   try {
-    // if (map.isSourceLoaded('greenRoads')) {
     console.log("Removing sources...");
     map.removeLayer('greenRoadsId');
     map.removeLayer('redRoadsId');
@@ -66,14 +65,8 @@ export function removeStreetLayers(map: mapboxgl.Map): void {
     map.removeSource('greenRoads');
     map.removeSource('redRoads');
     map.removeSource('orangeRoads');
-
-    // } else {
-
-    //   console.log("NOT Removing sources.");
-    // }
-
   } catch (e) {
-
+    console.log("not removing sources - at least one doesn't exist yet");
   }
 }
 
