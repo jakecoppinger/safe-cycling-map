@@ -1,27 +1,30 @@
 import { Geometry, GeoJsonProperties, Feature } from 'geojson';
 
 export function isRedRoad(feature: Feature<Geometry, GeoJsonProperties>): boolean {
-  if (feature.properties === null) {
+  const p = feature.properties;
+  if (p === null) {
     return false;
   }
-  return (feature.properties.maxspeed > 40 || (feature.properties.highway === 'residential' && feature.properties.maxspeed === undefined))
+  return (p.maxspeed > 40 || (p.highway === 'residential' && p.maxspeed === undefined))
 }
 
 export function isOrangeRoad(feature: Feature<Geometry, GeoJsonProperties>): boolean {
-  if (feature.properties === null) {
+  const p = feature.properties;
+  if (p === null) {
     return false;
   }
 
-  return (feature.properties.maxspeed <= 40 || feature.properties.cycleway === 'lane')
+  return (p.maxspeed <= 40 || p.cycleway === 'lane')
 
 }
 export function isGreenRoad(feature: Feature<Geometry, GeoJsonProperties>): boolean {
-  if (feature.properties === null) {
+  const p = feature.properties;
+  if (p === null) {
     return false;
   }
-  return (feature.properties.maxspeed <= 30 || feature.properties.highway === 'cycleway' || feature.properties.highway === 'pedestrian'
+  return (p.maxspeed <= 30 || p.highway === 'cycleway' || p.highway === 'pedestrian'
 
-    || feature.properties.highway === 'living_street'
+    || p.highway === 'living_street'
   )
 
 }
