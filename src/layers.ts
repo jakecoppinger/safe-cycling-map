@@ -1,5 +1,6 @@
 // TODO: Find the layer of the road labels for the maptiler background
 const layerToAddAfter = undefined;
+// const layerToAddAfter = 'greenRoadsId'; //undefined;
 
 function addLayer(
   map: mapboxgl.Map,

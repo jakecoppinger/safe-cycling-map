@@ -78,6 +78,8 @@ export function removeStreetLayers(map: mapboxgl.Map): void {
 }
 
 export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Geometry, GeoJsonProperties>) {
+  /** Add below first vector layer */
+  const layerToAddBefore = 'SharedUse';
   map.addSource('redRoads', {
     type: 'geojson',
     data: {
@@ -116,7 +118,7 @@ export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Ge
       "line-width": 3,
       'line-opacity': 0.3
     },
-  });
+  }, layerToAddBefore);
 
   map.addLayer({
     'id': 'orangeRoadsId',
@@ -128,7 +130,7 @@ export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Ge
       "line-width": 3,
       'line-opacity': 0.5
     },
-  });
+  }, layerToAddBefore);
 
 
   // Add a new layer to visualize the polygon.
@@ -142,7 +144,7 @@ export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Ge
       "line-width": 7,
       'line-opacity': 0.8
     },
-  });
+  },layerToAddBefore);
 
 }
 

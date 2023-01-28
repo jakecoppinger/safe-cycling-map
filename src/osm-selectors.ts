@@ -12,6 +12,9 @@ export function isRedRoad(feature: Feature<Geometry, GeoJsonProperties>): boolea
   if (p === null) {
     return false;
   }
+  if(p.highway === 'primary' && p.maxspeed === undefined) {
+    return true;
+  }
   if (p.maxspeed > 40) {
     return true;
   }
@@ -68,7 +71,7 @@ export function isGreenRoad(feature: Feature<Geometry, GeoJsonProperties>): bool
   if (p.highway === 'shared_lane') {
     return true;
   }
-  if (p.bicycle === 'designated') {
+  if (p.bicycle === 'designated' && p.highway === 'cycleway') {
     return true;
   }
   if (p.highway === 'living_street') {

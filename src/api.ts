@@ -1,10 +1,9 @@
 import debounce from "debounce";
-import { LoadingStatusType, OverpassResponse, RawOverpassNode } from "./interfaces";
+import { LoadingStatusType, OverpassResponse} from "./interfaces";
 
 import * as http from "https";
-import { addStreetLayers, drawMarkersAndCards, removeMarkers, removeStreetLayers } from "./drawing";
-import { wayToNode } from "./geo-utils";
-import { bicycleParking, safeCycleways } from "./overpass-requests";
+import { addStreetLayers, removeStreetLayers } from "./drawing";
+import { safeCycleways } from "./overpass-requests";
 
 import osmtogeojson from 'osmtogeojson';
 
@@ -66,17 +65,14 @@ async function fetchAndDrawMarkers(
   const northLat = bounds.getNorth();
   const eastLong = bounds.getEast();
 
-  let ads: OverpassResponse;
   let safeRoutes: OverpassResponse;
 
   const overpassBounds = [southernLat, westLong, northLat, eastLong];
   const boundsStr = overpassBounds.join(",");
-  const parkingOverpassQuery = bicycleParking(boundsStr);;
   const safeRoutesOverpassQuery = safeCycleways(boundsStr);;
 
   console.log("Started POST request...");
   try {
-    ads = (await getOSMData(parkingOverpassQuery));
     safeRoutes = await getOSMData(safeRoutesOverpassQuery);
   } catch (e) {
     console.log("Error:", e);
@@ -91,16 +87,5 @@ async function fetchAndDrawMarkers(
   removeStreetLayers(map);
   addStreetLayers(map, geoJson);
   
-
   setLoadingStatus("success");
-  return;
-  // removeMarkers(markers.current);
-
-  // const nodesAndWayCenters: RawOverpassNode[] = ads.elements
-  //   .map((item) => (item.type === "way" ? wayToNode(item, ads.elements) : item))
-  //   .filter((item) => item !== null)
-  //   .map((item) => item as RawOverpassNode)
-  //   .filter((item) => item.tags !== undefined);
-
-  // markers.current = await drawMarkersAndCards(map, nodesAndWayCenters);
 }
