@@ -2,7 +2,7 @@ Safe Cycling Map
 ================
 
 A map showing how safe a street is for cycling, based on (arbitrary) metrics. See the
-[key](https://github.com/jakecoppinger/safe-cycling-map/blob/main/key.md) for how street safety is calculated.
+[key](https://github.com/jakecoppinger/safe-cycling-map/blob/main/docs/key.md) for how street safety is calculated.
 
 This is a work in progress side project. This data is not guaranteed to be accurate.
 

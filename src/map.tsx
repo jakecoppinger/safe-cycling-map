@@ -131,7 +131,7 @@ export function Map() {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://github.com/jakecoppinger/safe-cycling-map/blob/main/key.md"
+            href="https://github.com/jakecoppinger/safe-cycling-map/blob/main/docs/key.md"
           >
             View map key and how safety is calculated
           </a>
