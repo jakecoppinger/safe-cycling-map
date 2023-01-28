@@ -23,7 +23,7 @@ export const safeCycleways = (boundsStr: string) => `
 /* Select road types to display */ 
 
 ( 
-  way[highway]["highway"!~"cycleway|path|footway|pedestrian"]["bicycle"!~"no"][maxspeed](if:t["maxspeed"]<=50);
+  way[highway]["highway"!~"cycleway|path|footway|pedestrian"]["bicycle"!~"no"];
   way["highway"="residential"];
   
   way[highway=cycleway];
@@ -32,6 +32,8 @@ export const safeCycleways = (boundsStr: string) => `
   way[highway=construction][construction=cycleway];
   way[proposed=cycleway];
   way[cycleway=lane];
+  way["cycleway:left"=track];
+  way[cycleway=track];
 
 );
 
