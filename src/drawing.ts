@@ -57,20 +57,20 @@ export function removeMarkers(markers: mapboxgl.Marker[]): void {
 }
 export function removeStreetLayers(map: mapboxgl.Map): void {
   try {
-    if (map.isSourceLoaded('greenRoads')) {
-      console.log("Removing sources...");
-      map.removeLayer('greenRoadsId');
-      map.removeLayer('redRoadsId');
-      map.removeLayer('orangeRoadsId');
+    // if (map.isSourceLoaded('greenRoads')) {
+    console.log("Removing sources...");
+    map.removeLayer('greenRoadsId');
+    map.removeLayer('redRoadsId');
+    map.removeLayer('orangeRoadsId');
 
-      map.removeSource('greenRoads');
-      map.removeSource('redRoads');
-      map.removeSource('orangeRoads');
+    map.removeSource('greenRoads');
+    map.removeSource('redRoads');
+    map.removeSource('orangeRoads');
 
-    } else {
+    // } else {
 
-      console.log("NOT Removing sources.");
-    }
+    //   console.log("NOT Removing sources.");
+    // }
 
   } catch (e) {
 
@@ -144,7 +144,7 @@ export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Ge
       "line-width": 7,
       'line-opacity': 0.8
     },
-  },layerToAddBefore);
+  }, layerToAddBefore);
 
 }
 

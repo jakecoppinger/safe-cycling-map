@@ -60,12 +60,12 @@ export function Map() {
       }),
       "top-left"
     );
-    map.addControl(
-      new MapboxDirections({
-        accessToken: mapboxgl.accessToken,
-      }),
-      "top-left"
-    );
+    // map.addControl(
+    //   new MapboxDirections({
+    //     accessToken: mapboxgl.accessToken,
+    //   }),
+    //   "top-left"
+    // );
     map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -84,7 +84,7 @@ export function Map() {
       if (zoom < min_overpass_turbo_zoom) {
         setLoadingStatus("too_zoomed_out");
       } else {
-        setLoadingStatus('ready_to_load');
+        setLoadingStatus("ready_to_load");
       }
       console.log(lng, lat, zoom);
 
@@ -124,15 +124,24 @@ export function Map() {
       <div className="sidebar">
         <label>
           {" "}
-          {statusText}<br></br> A work in progress side project by{" "}
+          {statusText}
+          <br></br>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/jakecoppinger/safe-cycling-map/blob/main/about.md"
+          >
+            View map key and how safety is calculated
+          </a>
+          <br></br>A work in progress side project by{" "}
           <a
             target="_blank"
             rel="noopener noreferrer"
             href="https://jakecoppinger.com/"
           >
             Jake Coppinger
-          </a>{" "}
-          | Open source on{" "}
+          </a>
+          <br></br>Open source on{" "}
           <a
             target="_blank"
             rel="noopener noreferrer"
