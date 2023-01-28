@@ -2,7 +2,7 @@ import debounce from "debounce";
 import { OverpassResponse, RawOverpassNode } from "./interfaces";
 
 import * as http from "https";
-import { drawMarkersAndCards, removeMarkers } from "./drawing";
+import { addStreetLayers, drawMarkersAndCards, removeMarkers, removeStreetLayers } from "./drawing";
 import { wayToNode } from "./geo-utils";
 import { bicycleParking, safeCycleways } from "./overpass-requests";
 
@@ -86,102 +86,21 @@ async function fetchAndDrawMarkers(
   console.log(geoJson);
   console.log("Adding geojson to map...");
 
-  try {
-    if(map.isSourceLoaded('greenRoads')) {
-      console.log("Removing sources...");
-      map.removeLayer('greenRoadsId');
-      map.removeLayer('redRoadsId');
-      map.removeLayer('orangeRoadsId');
-
-      map.removeSource('greenRoads');
-      map.removeSource('redRoads');
-      map.removeSource('orangeRoads');
-
-    } else {
-
-      console.log("NOT Removing sources.");
-    }
-
-  } catch (e) {
-
-  }
-
-  map.addSource('redRoads', {
-    type: 'geojson',
-    data: {
-      features: geoJson.features.filter(feature => feature.properties &&
-        feature.properties.maxspeed > 40),
-      type: "FeatureCollection"
-    }
-  });
-
-  map.addSource('greenRoads', {
-    type: 'geojson',
-    data: {
-      features: geoJson.features.filter(feature => feature.properties &&
-        (feature.properties.highway === 'cycleway' || feature.properties.highway === 'pedestrian'))
-      ,
-      type: "FeatureCollection"
-    }
-  });
-  map.addSource('orangeRoads', {
-    type: 'geojson',
-    data: {
-      features: geoJson.features.filter(feature => feature.properties &&
-        (feature.properties.maxspeed <= 40))
-      ,
-      type: "FeatureCollection"
-    }
-  });
-
-
-
-  // Add a new layer to visualize the polygon.
-  map.addLayer({
-    'id': 'redRoadsId',
-    'type': 'line',
-    'source': 'redRoads', // reference the data source
-    'layout': {},
-    'paint': {
-      "line-color": "red",
-      "line-width": 5
-    },
-  });
-
-
-  // Add a new layer to visualize the polygon.
-  map.addLayer({
-    'id': 'greenRoadsId',
-    'type': 'line',
-    'source': 'greenRoads', // reference the data source
-    'layout': {},
-    'paint': {
-      "line-color": "green",
-      "line-width": 5
-    },
-  });
-  map.addLayer({
-    'id': 'orangeRoadsId',
-    'type': 'line',
-    'source': 'orangeRoads', // reference the data source
-    'layout': {},
-    'paint': {
-      "line-color": "orange",
-      "line-width": 5
-    },
-  });
+  removeStreetLayers(map);
+  addStreetLayers(map, geoJson);
+  
 
   return;
-  removeMarkers(markers.current);
+  // removeMarkers(markers.current);
 
-  const nodesAndWayCenters: RawOverpassNode[] = ads.elements
-    .map((item) => (item.type === "way" ? wayToNode(item, ads.elements) : item))
-    .filter((item) => item !== null)
-    .map((item) => item as RawOverpassNode)
-    .filter((item) => item.tags !== undefined);
+  // const nodesAndWayCenters: RawOverpassNode[] = ads.elements
+  //   .map((item) => (item.type === "way" ? wayToNode(item, ads.elements) : item))
+  //   .filter((item) => item !== null)
+  //   .map((item) => item as RawOverpassNode)
+  //   .filter((item) => item.tags !== undefined);
 
-  markers.current = await drawMarkersAndCards(map, nodesAndWayCenters);
-  setLoadingStatus("success");
+  // markers.current = await drawMarkersAndCards(map, nodesAndWayCenters);
+  // setLoadingStatus("success");
 }
 
 type LoadingStatusType = "loading" | "success" | "429error" | "unknownerror";

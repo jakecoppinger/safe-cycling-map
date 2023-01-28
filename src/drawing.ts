@@ -3,6 +3,7 @@ import {
   RawOverpassNode,
 } from "./interfaces";
 
+import { FeatureCollection, Geometry, GeoJsonProperties, Feature, GeometryObject } from 'geojson';
 
 export function drawMarkerAndCard(
   item: RawOverpassNode,
@@ -52,6 +53,97 @@ export function drawMarkerAndCard(
 
 export function removeMarkers(markers: mapboxgl.Marker[]): void {
   markers.map((marker) => marker.remove());
+}
+export function removeStreetLayers(map: mapboxgl.Map): void {
+  try {
+    if(map.isSourceLoaded('greenRoads')) {
+      console.log("Removing sources...");
+      map.removeLayer('greenRoadsId');
+      map.removeLayer('redRoadsId');
+      map.removeLayer('orangeRoadsId');
+
+      map.removeSource('greenRoads');
+      map.removeSource('redRoads');
+      map.removeSource('orangeRoads');
+
+    } else {
+
+      console.log("NOT Removing sources.");
+    }
+
+  } catch (e) {
+
+  }
+}
+
+export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Geometry, GeoJsonProperties>) {
+map.addSource('redRoads', {
+    type: 'geojson',
+    data: {
+      features: geoJson.features.filter(feature => feature.properties &&
+        feature.properties.maxspeed > 40),
+      type: "FeatureCollection"
+    }
+  });
+
+  map.addSource('greenRoads', {
+    type: 'geojson',
+    data: {
+      features: geoJson.features.filter(feature => feature.properties &&
+        (feature.properties.highway === 'cycleway' || feature.properties.highway === 'pedestrian'))
+      ,
+      type: "FeatureCollection"
+    }
+  });
+  map.addSource('orangeRoads', {
+    type: 'geojson',
+    data: {
+      features: geoJson.features.filter(feature => feature.properties &&
+        (feature.properties.maxspeed <= 40))
+      ,
+      type: "FeatureCollection"
+    }
+  });
+
+
+
+  // Add a new layer to visualize the polygon.
+  map.addLayer({
+    'id': 'redRoadsId',
+    'type': 'line',
+    'source': 'redRoads', // reference the data source
+    'layout': {},
+    'paint': {
+      "line-color": "red",
+      "line-width": 3
+    },
+  });
+
+
+  // Add a new layer to visualize the polygon.
+  map.addLayer({
+    'id': 'greenRoadsId',
+    'type': 'line',
+    'source': 'greenRoads', // reference the data source
+    'layout': {},
+    'paint': {
+      "line-color": "green",
+      "line-width": 7
+    },
+  });
+  map.addLayer({
+    'id': 'orangeRoadsId',
+    'type': 'line',
+    'source': 'orangeRoads', // reference the data source
+    'layout': {},
+    'paint': {
+      "line-color": "orange",
+      "line-width": 5
+    },
+  });
+
+
+
 }
 
 export function drawMarkersAndCards(
