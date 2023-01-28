@@ -23,7 +23,7 @@ export const safeCycleways = (boundsStr: string) => `
 /* Select road types to display */ 
 
 ( 
-  way[highway]["highway"!~"cycleway|path|footway|pedestrian"]["bicycle"!~"no"];
+  way[highway];
   way["highway"="residential"];
   
   way[highway=cycleway];

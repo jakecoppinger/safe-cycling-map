@@ -15,13 +15,17 @@ import { LoadingStatusType } from "./interfaces";
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoiamFrZWMiLCJhIjoiY2tkaHplNGhjMDAyMDJybW4ybmRqbTBmMyJ9.AR_fnEuka8-cFb4Snp3upw";
 
+const min_overpass_turbo_zoom = 15;
+/** Also the min zoom of the vector tileserver */
+// const max_overpass_turbo_zoom = 15;
+
 mapboxgl.accessToken = MAPBOX_TOKEN;
 export function Map() {
   const mapContainer = React.useRef<HTMLDivElement>(null);
   const mapRef = React.useRef<mapboxgl.Map | null>(null);
   const markers = React.useRef<mapboxgl.Marker[]>([]);
   const [loadingStatus, setLoadingStatus] =
-    useState<LoadingStatusType>("success");
+    useState<LoadingStatusType>("ready_to_load");
 
   const [lng, setLng] = useState(151.2160755932166);
   const [lat, setLat] = useState(-33.88056647217827);
@@ -41,7 +45,7 @@ export function Map() {
       center: [lng, lat],
       zoom: zoom,
       hash: true,
-      style: 'mapbox://styles/mapbox/dark-v11', 
+      style: "mapbox://styles/mapbox/dark-v11",
     });
 
     const map = mapRef.current;
@@ -77,40 +81,50 @@ export function Map() {
       }
       const { lng, lat } = map.getCenter();
       const zoom = map.getZoom();
+      if (zoom < min_overpass_turbo_zoom) {
+        setLoadingStatus("too_zoomed_out");
+      } else {
+        setLoadingStatus('ready_to_load');
+      }
       console.log(lng, lat, zoom);
 
       setLng(map.getCenter().lng);
       setLat(map.getCenter().lat);
       setZoom(map.getZoom());
     });
-    debouncedFetchAndDrawMarkers(map, markers, setLoadingStatus);
 
+    if (zoom < min_overpass_turbo_zoom) {
+      setLoadingStatus("too_zoomed_out");
+    } else {
+      debouncedFetchAndDrawMarkers(map, markers, setLoadingStatus);
+    }
 
     map.on("moveend", async () => {
       if (map === null) {
         return;
       }
-      debouncedFetchAndDrawMarkers(map, markers, setLoadingStatus);
+      const zoom = map.getZoom();
+      if (zoom > min_overpass_turbo_zoom) {
+        debouncedFetchAndDrawMarkers(map, markers, setLoadingStatus);
+      }
     });
-
-
   });
   const statusMessages = {
     loading: "Loading from OpenStreetMap...",
     success: "Done loading",
-    unknownerror: "Error loading data. Please wait a bit",
+    ready_to_load: "About to load...",
+    too_zoomed_out: "Zoom in to see street safety",
+    unknownerror: "Error loading. Please wait a bit",
     "429error": "Too many requests, please try in a bit",
   };
-
 
   const statusText = statusMessages[loadingStatus];
   return (
     <div>
       <div className="sidebar">
         <label>
-        {" "}
-          {statusText} |{" "}
-          A work in progress side project by{" "}
+          {" "}
+          {statusText}<br></br> A work in progress side project by{" "}
           <a
             target="_blank"
             rel="noopener noreferrer"

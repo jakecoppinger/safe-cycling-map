@@ -1,5 +1,5 @@
 import debounce from "debounce";
-import { OverpassResponse, RawOverpassNode } from "./interfaces";
+import { LoadingStatusType, OverpassResponse, RawOverpassNode } from "./interfaces";
 
 import * as http from "https";
 import { addStreetLayers, drawMarkersAndCards, removeMarkers, removeStreetLayers } from "./drawing";
@@ -14,8 +14,10 @@ import osmtogeojson from 'osmtogeojson';
  * @returns 
  */
 export async function getOSMData(overpassQuery: string): Promise<OverpassResponse> {
+  // overpass.kumi.systems
+    // hostname: "overpass-api.de",
   const options = {
-    hostname: "overpass-api.de",
+    hostname: "overpass.kumi.systems",
     port: 443,
     path: "/api/interpreter",
     method: "POST",
@@ -102,5 +104,3 @@ async function fetchAndDrawMarkers(
 
   // markers.current = await drawMarkersAndCards(map, nodesAndWayCenters);
 }
-
-type LoadingStatusType = "loading" | "success" | "429error" | "unknownerror";

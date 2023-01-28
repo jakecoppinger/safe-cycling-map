@@ -33,4 +33,4 @@ export type OverpassResponse = {
 };
 
 
-export type LoadingStatusType = "loading" | "success" | "429error" | "unknownerror";
+export type LoadingStatusType = "loading" | "success" | "429error" | "unknownerror" | "too_zoomed_out" | "ready_to_load"

@@ -113,7 +113,8 @@ export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Ge
     'layout': {},
     'paint': {
       "line-color": "red",
-      "line-width": 3
+      "line-width": 3,
+      'line-opacity': 0.3
     },
   });
 
@@ -124,10 +125,10 @@ export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Ge
     'layout': {},
     'paint': {
       "line-color": "orange",
-      "line-width": 3
+      "line-width": 3,
+      'line-opacity': 0.5
     },
   });
-
 
 
   // Add a new layer to visualize the polygon.
@@ -137,8 +138,9 @@ export function addStreetLayers(map: mapboxgl.Map, geoJson: FeatureCollection<Ge
     'source': 'greenRoads', // reference the data source
     'layout': {},
     'paint': {
-      "line-color": "green",
-      "line-width": 7
+      "line-color": "#00FF00",
+      "line-width": 7,
+      'line-opacity': 0.8
     },
   });
 
