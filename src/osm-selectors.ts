@@ -40,7 +40,7 @@ export function isOrangeRoad(feature: Feature<Geometry, GeoJsonProperties>): boo
   if (p.maxspeed <= 40) {
     return true;
   }
-  if (p.cycleway === 'lane') {
+  if (p.cycleway === 'lane' || p['cycleway:left'] === 'lane' || p['cycleway:right'] === 'lane' || p['cycleway:both'] === 'lane') {
     return true;
   }
   return false;
